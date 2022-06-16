@@ -1,0 +1,33 @@
+[SpeedOriented_DirectMapping]
+model_name = 'speed_oriented_direct_mapping'
+datasets = 'datasets_path'
+batch_size = 38
+main_iterations = 630901
+lr_main = 0.0001
+alpha_ssim = 1.0
+lamb_per = 1.0
+lamb_adv = 0.0
+critic_iter = 1
+width_multiplier = 1
+expansion_ratio = 6
+blocks = 8
+snorm = True
+patch = True
+conv_lstm_iteration = -1
+
+[QaulityOriented_DirectMapping]
+model_name = 'quality_oriented_direct_mapping'
+datasets = 'datasets_path'
+batch_size = 5
+main_iterations = 630901
+lr_main = 0.0001
+alpha_ssim = 1.0
+lamb_per = 1.0
+lamb_adv = 0.0
+critic_iter = 1
+width_multiplier = 1
+expansion_ratio = 6
+blocks = 9
+snorm = True
+patch = True
+conv_lstm_iteration = 6
