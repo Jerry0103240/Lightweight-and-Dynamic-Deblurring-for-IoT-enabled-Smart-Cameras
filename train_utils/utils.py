@@ -67,3 +67,4 @@ def testing_config_parser(cfg_path, section):
     training_section = str(config.get(section, 'training_section'))
     model_params = training_config_parser(training_cfg_path, training_section)
     testing_params['model_params'] = model_params
+    return testing_params
