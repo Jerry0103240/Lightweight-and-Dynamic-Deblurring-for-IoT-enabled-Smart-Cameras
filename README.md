@@ -32,10 +32,12 @@ According to loss functions composition, **Direct-mapping** type & **GAN-based**
   - Entry point: ./pipeline/train.py
   - Config: ./train_cfg/cfg.txt
     - including four model sections related info
+  - CMD: `python train.py --cfg_path ../train_cfg/cfg.txt --sectioon SpeedOriented_DirectMapping`
 - For testing
   - Entry point: ./pipeline/test.py
   - Config: ./test_cfg/cfg.txt
-    - including model ckpt path, model section for testing
+    - Given testing data path, model ckpt path, training model section for testing
+  - CMD: `python test.py --cfg_path ../test_cfg/cfg.txt --section Testing`
 
 ## Demo
 
