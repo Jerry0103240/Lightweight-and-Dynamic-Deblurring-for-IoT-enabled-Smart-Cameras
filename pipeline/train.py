@@ -1,12 +1,12 @@
 import os
 import datetime
+import argparse
 import sys
 import json
 from pathlib import Path
-from train_utils.utils import training_config_parser
 sys.path.append(os.path.dirname(Path(__file__).parent.absolute()) + '/train_utils')
 
-from utils import config_parser
+from utils import training_config_parser
 from models import *
 from data_loader import *
 from layers import *
@@ -218,12 +218,15 @@ def train(model_name='model_name',
 
 
 if __name__ == '__main__':
-    cfg_path = '../train_cfg/cfg.txt'
-    section = 'SpeedOriented_DirectMapping'
-    model_params = training_config_parser(cfg_path, section)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--cfg_path', type=str, required=True)
+    parser.add_argument('--section', type=str, required=True)
+    args = parser.parse_args()
 
+    model_params = training_config_parser(args.cfg_path, args.section)
     print(f'model_params = ' + json.dumps(model_params))
     print('Start training !')
+
     train(model_name=model_params['model_name'],
           datasets=model_params['datasets'],
           batch_size=model_params['batch_size'],

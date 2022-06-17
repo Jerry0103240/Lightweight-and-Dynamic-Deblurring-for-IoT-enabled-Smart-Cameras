@@ -1,5 +1,6 @@
 import time
 import tensorflow as tf
+import argparse
 from train_utils.data_loader import *
 from train_utils.models import *
 from train_utils.utils import testing_config_parser
@@ -74,9 +75,11 @@ def test(checkpoint='',
 
 
 if __name__ == '__main__':
-    cfg_path = '../test_cfg/cfg.txt'
-    section = 'Testing'
-    testing_params = testing_config_parser(cfg_path, section)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--cfg_path', type=str, required=True)
+    parser.add_argument('--section', type=str, required=True)
+    args = parser.parse_args()
+    testing_params = testing_config_parser(args.cfg_path, args.section)
 
     test(checkpoint=testing_params['testing_ckpt_path'],
          data_path=testing_params['testing_datasets'],
