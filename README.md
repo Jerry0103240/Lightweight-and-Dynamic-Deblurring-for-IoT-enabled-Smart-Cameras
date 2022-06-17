@@ -15,10 +15,16 @@ According to loss functions composition, **Direct-mapping** type & **GAN-based**
   - Qaulity-oriented model
     - Direct-mapping type
     - GAN-based type  
- <br>
+
   - Refer the paper for details.
 
 ## Model Architecture
+
+- Speed-oriented model architecture design:
+![image](https://user-images.githubusercontent.com/35868815/174267732-f6a64672-640e-45ec-8261-7e377106269e.png)
+
+- Qaulity-oriented model architecture design:
+![image](https://user-images.githubusercontent.com/35868815/174268689-ca31fa8c-ed76-4d47-8835-9c40ab5ec9b6.png)
 
 ## How to use
 
