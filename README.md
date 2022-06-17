@@ -18,7 +18,7 @@ According to loss functions composition, **Direct-mapping** type & **GAN-based**
 
   - Refer the paper for details.
 
-## Model Architecture
+## Model Architecture Overview
 
 - Speed-oriented model architecture design:
 ![image](https://user-images.githubusercontent.com/35868815/174267732-f6a64672-640e-45ec-8261-7e377106269e.png)
