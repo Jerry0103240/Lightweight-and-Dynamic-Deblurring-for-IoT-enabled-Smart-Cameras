@@ -31,3 +31,37 @@ blocks = 9
 snorm = True
 patch = True
 conv_lstm_iteration = 6
+
+[SpeedOriented_GAN_Based]
+model_name = speed_oriented_gan_based
+datasets = datasets_path
+batch_size = 25
+main_iterations = 630901
+lr_main = 0.0001
+alpha_ssim = 1.0
+lamb_per = 1.0
+lamb_adv = 0.001,
+critic_iter = 1
+width_multiplier = 1
+expansion_ratio = 6
+blocks = 8
+snorm = True
+patch = True
+conv_lstm_iteration = -1
+
+[QualityOriented_GAN_Based]
+model_name = quality_oriented_gan_based
+datasets = datasets_path
+batch_size = 6
+main_iterations = 630901
+lr_main = 0.0001
+alpha_ssim = 1.0
+lamb_per = 1.0
+lamb_adv = 0.001,
+critic_iter = 1
+width_multiplier = 1
+expansion_ratio = 6
+blocks = 9
+snorm = True
+patch = True
+conv_lstm_iteration = 4
