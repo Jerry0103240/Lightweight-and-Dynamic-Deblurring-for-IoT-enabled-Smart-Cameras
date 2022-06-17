@@ -1,14 +1,19 @@
 import os
 import datetime
-from train_utils.utils import config_parser
-from train_utils.models import *
-from train_utils.data_loader import *
-from train_utils.layers import *
-from train_utils.utils import images_augmentation
-from train_utils.hednet import HEDnet
+import sys
+import json
+from pathlib import Path
+sys.path.append(os.path.dirname(Path(__file__).parent.absolute()) + '/train_utils')
+
+from utils import config_parser
+from models import *
+from data_loader import *
+from layers import *
+from utils import images_augmentation
+from hednet import HEDnet
 
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
 
 def train(model_name='model_name',
@@ -160,7 +165,7 @@ def train(model_name='model_name',
 
             # ==========================adversarial training==========================#
             for step in range(main_iterations):
-
+                print(f'train step no: {step}')
                 if num_epochs != 0 and num_epochs < 151 and (step % (2103 * 5) == 0):
                     print(f'lr_main at {num_epochs} epochs: {lr_main}.')
                 elif num_epochs > 150 and (step % (2103 * 5) == 0):
@@ -177,13 +182,14 @@ def train(model_name='model_name',
 
                 ground_truth_buffer, input_image_buffer = sess.run(fetches=next_element)
                 ground_truth_buffer, input_image_buffer = images_augmentation(ground_truth_buffer, input_image_buffer)
+                
                 _ = sess.run(g_train, feed_dict={gt_placeholder: ground_truth_buffer,
                                                  lq_placeholder: input_image_buffer,
                                                  lr_main_placeholder: lr_main})
                 if step == 5:
                     print('Start Tensorboard with command line: tensorboard --logdir=./tensorboard')
                     print('Open Tensorboard with URL: http://localhost:6006/')
-
+                
                 # record training metrics
                 if step % 50 == 0:
                     record = sess.run(merged_record, feed_dict={gt_placeholder: ground_truth_buffer,
@@ -197,7 +203,7 @@ def train(model_name='model_name',
                                                                lq_placeholder: input_image_buffer,
                                                                lr_main_placeholder: lr_main})
                     writer.add_summary(images, step)
-
+                
                 # save checkpoint
                 if step != 0 and step % 10000 == 0:
                     saver.save(sess, checkpoint_dir, global_step=step, write_meta_graph=False)
@@ -211,10 +217,12 @@ def train(model_name='model_name',
 
 
 if __name__ == '__main__':
-    cfg_path = './train_cfg/cfg.txt'
+    cfg_path = '../train_cfg/cfg.txt'
     section = 'SpeedOriented_DirectMapping'
     model_params = config_parser(cfg_path, section)
 
+    print(f'model_params = ' + json.dumps(model_params))
+    print('Start training !')
     train(model_name=model_params['model_name'],
           datasets=model_params['datasets'],
           batch_size=model_params['batch_size'],
@@ -230,3 +238,4 @@ if __name__ == '__main__':
           snorm=model_params['snorm'],
           patch=model_params['patch'],
           conv_lstm_iteration=model_params['conv_lstm_iteration'])
+    print('Finish training !')
