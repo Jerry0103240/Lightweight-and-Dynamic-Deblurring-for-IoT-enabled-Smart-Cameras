@@ -1,23 +1,38 @@
 # Lightweight and Dynamic Deblurring for IoT enabled Smart Cameras
 
-### Abstract
-[Paper reference](https://ieeexplore.ieee.org/document/9776515)
+## Abstract
+[IEEE Internet of Things Journal](https://ieeexplore.ieee.org/document/9776515)
 
-Tensorflow implementaion of **"Lightweight and Dynamic Deblurring for IoT-enabled Smart Cameras"** which is published on IEEE Internet of Things Journal by Ju-Wei, Que. 
+Tensorflow implementaion of **"Lightweight and Dynamic Deblurring for IoT-enabled Smart Cameras"** by Ju-Wei, Que. 
 
 This repo including speed-oriented & quality-oriented image deblurring models for usage. <br>
-According to loss functions composition, Direct-mapping type & GAN-based type are introduced.
+
+According to loss functions composition, **Direct-mapping** type & **GAN-based** type are introduced.
   - Speed-oriented model
     - Direct-mapping type
     - GAN-based type
  
   - Qaulity-oriented model
     - Direct-mapping type
-    - GAN-based type
-### How to use
+    - GAN-based type  
+ <br>
+  - Refer the paper for details.
 
-### Demo
+## Model Architecture
 
-### Comparison
+## How to use
 
-### Acknowledgments
+- For training
+  - Entry point: ./pipeline/train.py
+  - Config: ./train_cfg/cfg.txt
+    - including four model sections related info
+- For testing
+  - Entry point: ./pipeline/test.py
+  - Config: ./test_cfg/cfg.txt
+    - including model ckpt path, model section for testing
+
+## Demo
+
+## Comparison
+
+## Acknowledgments
