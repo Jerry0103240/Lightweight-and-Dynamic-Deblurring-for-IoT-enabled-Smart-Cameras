@@ -34,7 +34,7 @@ def images_augmentation(ground_truth_buffer, input_image_buffer, clip_size=256):
     return ground_truth_buffer, input_image_buffer
 
 
-def config_parser(cfg_path, section):
+def training_config_parser(cfg_path, section):
     model_params = dict()
     config = configparser.ConfigParser()
     config.read_file(open(f'{cfg_path}'))
@@ -54,3 +54,16 @@ def config_parser(cfg_path, section):
     model_params['patch'] = bool(config.get(section, 'patch'))
     model_params['conv_lstm_iteration'] = int(config.get(section, 'conv_lstm_iteration'))
     return model_params
+
+
+def testing_config_parser(cfg_path, section):
+    testing_params = dict()
+    config = configparser.ConfigParser()
+    config.read_file(open(f'{cfg_path}'))
+    testing_params['testing_datasets'] = str(config.get(section, 'testing_datasets'))
+    testing_params['testing_ckpt_path'] = str(config.get(section, 'testing_ckpt_path'))
+    
+    training_cfg_path = str(config.get(section, 'training_cfg_path'))
+    training_section = str(config.get(section, 'training_section'))
+    model_params = training_config_parser(training_cfg_path, training_section)
+    testing_params['model_params'] = model_params

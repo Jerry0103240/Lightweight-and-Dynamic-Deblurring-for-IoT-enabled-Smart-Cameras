@@ -1,14 +1,16 @@
+import time
 import tensorflow as tf
 from train_utils.data_loader import *
 from train_utils.models import *
-import time
+from train_utils.utils import testing_config_parser
 
 
 def test(checkpoint='',
          data_path='',
          width_multiplier=1,
          expansion_ratio=6,
-         blocks=8):
+         blocks=8,
+         conv_lstm_iteration=-1):
     with tf.Graph().as_default():
         # ==========================Dataset==========================#
         dataset = tf.data.TFRecordDataset(data_path)
@@ -25,12 +27,19 @@ def test(checkpoint='',
             img_gt = tf.image.convert_image_dtype(gt_placeholder, tf.float32)
 
         # ==========================network==========================#
-        img_en = Generator(img_lq,
-                           scope='gen',
-                           width_multiplier=width_multiplier,
-                           expansion_ratio=expansion_ratio,
-                           blocks=blocks)
-
+        if conv_lstm_iteration > 0:
+            img_en = GeneratorConvLSTM(img_lq,
+                                       iteration=conv_lstm_iteration,
+                                       scope='gen',
+                                       width_multiplier=width_multiplier,
+                                       expansion_ratio=expansion_ratio,
+                                       blocks=blocks)
+        else:
+            img_en = Generator(img_lq,
+                               scope='gen', 
+                               width_multiplier=width_multiplier,
+                               expansion_ratio=expansion_ratio,
+                               blocks=blocks)
         # ==========================output placeholder==========================#
         with tf.variable_scope('outputs'):
             out_img = tf.image.convert_image_dtype(img_en, tf.uint8, saturate=True, name='output')
@@ -65,6 +74,13 @@ def test(checkpoint='',
 
 
 if __name__ == '__main__':
-    data = "Directory of testing dataset with tfrecord type"
-    test(checkpoint='model.ckpt',
-         data_path=data)
+    cfg_path = '../test_cfg/cfg.txt'
+    section = 'Testing'
+    testing_params = testing_config_parser(cfg_path, section)
+
+    test(checkpoint=testing_params['testing_ckpt_path'],
+         data_path=testing_params['testing_datasets'],
+         width_multiplier=testing_params['model_params']['width_multiplier'],
+         expansion_ratio=testing_params['model_params']['expansion_ratio'],
+         blocks=testing_params['model_params']['blocks'],
+         conv_lstm_iteration=testing_params['model_params']['conv_lstm_iteration'])

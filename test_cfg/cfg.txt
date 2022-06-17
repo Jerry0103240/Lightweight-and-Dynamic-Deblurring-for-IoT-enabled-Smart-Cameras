@@ -1,0 +1,5 @@
+[Testing]
+testing_datasets = datasets
+testing_ckpt_path = ckpt_path
+training_cfg_path = cfg_path
+training_section = SpeedOriented_DirectMapping

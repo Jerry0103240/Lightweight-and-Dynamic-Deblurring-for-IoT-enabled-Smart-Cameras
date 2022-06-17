@@ -3,6 +3,7 @@ import datetime
 import sys
 import json
 from pathlib import Path
+from train_utils.utils import training_config_parser
 sys.path.append(os.path.dirname(Path(__file__).parent.absolute()) + '/train_utils')
 
 from utils import config_parser
@@ -219,7 +220,7 @@ def train(model_name='model_name',
 if __name__ == '__main__':
     cfg_path = '../train_cfg/cfg.txt'
     section = 'SpeedOriented_DirectMapping'
-    model_params = config_parser(cfg_path, section)
+    model_params = training_config_parser(cfg_path, section)
 
     print(f'model_params = ' + json.dumps(model_params))
     print('Start training !')
