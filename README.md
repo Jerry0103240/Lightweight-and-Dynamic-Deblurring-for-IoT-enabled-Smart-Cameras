@@ -43,6 +43,11 @@ According to loss functions composition, **Direct-mapping** type & **GAN-based**
 ![Image](https://github.com/Jerry0103240/Lightweight-and-Dynamic-Deblurring-for-IoT-enabled-Smart-Cameras/blob/master/artifacts/blur_deblurred_0.gif)
 ![Image](https://github.com/Jerry0103240/Lightweight-and-Dynamic-Deblurring-for-IoT-enabled-Smart-Cameras/blob/master/artifacts/blur_deblurred_1.gif)
 
-## Comparison
+## Results
 
-## Acknowledgments
+Testing metrics on **GoPro dataset**:
+|  Model | SpeedOriented_DirectMapping  | QaulityOriented_DirectMapping | SpeedOriented_GAN_Based | QaulityOriented_GAN_Based |
+|  ----  | ----  | ----  | ----  | ----  |
+|  SSIM  |  0.9441 | 0.9588 | 0.9486 | 0.9323 |
+|  PSNR  | 30.83 | 32.50 | 31.45 | 29.87 |
+
