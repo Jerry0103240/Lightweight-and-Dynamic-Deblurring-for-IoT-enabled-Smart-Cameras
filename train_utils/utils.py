@@ -62,7 +62,9 @@ def testing_config_parser(cfg_path, section):
     config.read_file(open(f'{cfg_path}'))
     testing_params['testing_datasets'] = str(config.get(section, 'testing_datasets'))
     testing_params['testing_ckpt_path'] = str(config.get(section, 'testing_ckpt_path'))
-    
+    testing_params['to_save'] = bool(config.get(section, 'to_save'))
+    testing_params['saving_path'] = str(config.get(section, 'saving_path'))
+
     training_cfg_path = str(config.get(section, 'training_cfg_path'))
     training_section = str(config.get(section, 'training_section'))
     model_params = training_config_parser(training_cfg_path, training_section)
