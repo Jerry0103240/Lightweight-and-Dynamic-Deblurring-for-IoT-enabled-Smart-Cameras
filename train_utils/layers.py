@@ -10,6 +10,9 @@ def upsampling(x, size, name='upsample'):
 def pixel_shuffle(x, block_size=2, name='pixel_shuffle'):
     return tf.depth_to_space(x, block_size, name=name)
 
+def sigmoid(x):
+    return tf.nn.sigmoid(x, name="sigmoid")
+
 def relu(x, leaky=False):
     if leaky:
         return tf.nn.leaky_relu(x, name='leaky_relu')
@@ -140,16 +143,21 @@ End of Convulutions Layers
 Blocks
 '''
 def conv2d_block(x, input_dim, output_dim, filter_size=3, stride=1, bias=True, padding='SAME',
-                 snorm=False, leaky=False, linear=False, name='conv_block'):
+                 snorm=False, leaky=False, linear=False, af="relu", name='conv_block'):
     with tf.variable_scope(name):
         net = conv2d(x, [filter_size, filter_size, input_dim, output_dim], stride=stride, bias=bias, padding=padding,
                      snorm=snorm, name='conv')
         if linear:
             out = net
         else:
-            out = relu(net, leaky)
+            if af == "relu":
+                out = relu(net, leaky)
+            elif af == "sigmoid":
+                out = sigmoid(net)
+            elif af == "tanh":
+                out = tanh(net)
         return out
-    
+
 def deconv_block(x, input_dim, output_dim, output_shape, filter_size=3, stride=1, bias=True, padding='SAME',
                  leaky=False, linear=False, name='deconv_block'):
     with tf.variable_scope(name):
